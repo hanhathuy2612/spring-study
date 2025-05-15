@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: protocol-data-meter
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring_study?useUnicode=true&characterEncoding=utf8&useSSL=false&createDatabaseIfNotExist=true
+    username: root
+    password: FormosVN@123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      pool-name: hikari-id
+      auto-commit: true
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+      minimum-idle: 3
+      maximum-pool-size: 20
+    type: com.zaxxer.hikari.HikariDataSource
+  jpa:
+    show-sql: true
+    properties:
+      hibernate.format_sql: false
+      hibernate.dialect: org.hibernate.dialect.MySQLDialect
+      hibernate.transaction.jta.platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform
+    hibernate:
+      ddl-auto: none
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+  liquibase:
+    change-log: classpath:liquibase/master.xml
+
+security:
+  jwt:
+    base64-secret: YjQ0MmRmY2MwODQ5ZTE5MmIyYWQ5MDNjMTkzYzNkNTI5YThmZDhjYjFiYjA0NzFlZDZlZDllZWJmNjlmNDZkZWI0YTNjMGQ0NWVlYmQ4NzBmMTQ1YjliMjk1MjJiNWZjMzYxMmI4MzI4YzIxODZmMWM0MDMyNjQ3MWIzZGNhMDg=
+    token-validity: 86400
+
+# OpenAPI configuration
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  packages-to-scan: com.huy.spring_study.controller
