@@ -2,6 +2,7 @@ package com.huy.spring_study.service.impl;
 
 import com.huy.spring_study.configuration.security.AuthoritiesConstants;
 import com.huy.spring_study.configuration.security.SecurityUtils;
+import com.huy.spring_study.custom_transactional.CustomTransactional;
 import com.huy.spring_study.domain.Authority;
 import com.huy.spring_study.domain.User;
 import com.huy.spring_study.dto.RegisterDTO;
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private final RegisterMapper registerMapper;
 
     @Override
+    @CustomTransactional
     public User registerUser(RegisterDTO registerDTO) {
         User newUser = registerMapper.toEntity(registerDTO);
 
@@ -41,6 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
+    @CustomTransactional
     public Optional<User> getCurrentUser() {
         return SecurityUtils.getCurrentUserLogin()
                 .flatMap(userRepository::findOneByUsername);
@@ -48,6 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
+    @CustomTransactional
     public Optional<UserDTO> getUserWithAuthorities() {
         return SecurityUtils.getCurrentUserLogin()
                 .flatMap(userRepository::findOneByUsername)
